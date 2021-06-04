@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
-    
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
     <flow name="airindiaapi-main">
         <http:listener config-ref="airindiaapi-httpListenerConfig" path="/airIndia/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -121,8 +120,20 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\airIndiaFlights:airindiaapi-config">
-        <logger level="INFO" doc:name="Logger" doc:id="66d793ac-c0d8-4c6e-a483-b11544cc7bc4" message="Request received.. Air India Flights ...Paramers passed : #[attributes.queryParams]"/>
-		<flow-ref doc:name="airIndiaFlightsFlow" doc:id="0e32a928-f3ef-403b-bf24-a7b954cbd65b" name="airIndiaFlightsFlow"/>
-		<logger level="INFO" doc:name="Logger" doc:id="7fcf2a8f-3e97-46a8-93c8-7f63643fde77" message="Response received from AirIndia Flights .. #[payload]"/>
+        <logger level="INFO" doc:name="Logger" doc:id="66d793ac-c0d8-4c6e-a483-b11544cc7bc4" message="Request received.. Air India Flights ...Paramers passed : #[attributes.queryParams]" />
+        <flow-ref doc:name="airIndiaFlightsFlow" doc:id="0e32a928-f3ef-403b-bf24-a7b954cbd65b" name="airIndiaFlightsFlow" />
+        <logger level="INFO" doc:name="Logger" doc:id="7fcf2a8f-3e97-46a8-93c8-7f63643fde77" message="Response received from AirIndia Flights .. #[payload]" />
+    </flow>
+    <flow name="get:\airIndiaFlights\(source)\(destination)\(doj):airindiaapi-config">
+        <logger level="INFO" doc:name="Logger" doc:id="a1fca868-920d-4249-bb54-b9746ff023f1" message="Request received by AirIndia URI Params"/>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="source">attributes.uriParams.'source'</ee:set-variable>
+                <ee:set-variable variableName="destination">attributes.uriParams.'destination'</ee:set-variable>
+                <ee:set-variable variableName="doj">attributes.uriParams.'doj'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+		<flow-ref doc:name="airindiaFlightsURIFlow" doc:id="03d3b3b6-5746-40a0-81bc-424b4741c22a" name="airindiaFlightsURIFlow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e529a8de-d864-49be-ad82-916eb2b901ae" message="Response received from airinidaFlightsURI.... #[payload]"/>
     </flow>
 </mule>

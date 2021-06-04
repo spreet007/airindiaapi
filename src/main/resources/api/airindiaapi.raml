@@ -21,6 +21,17 @@ types:
           application/json:
             type: FlightsResponse[]
             example: !include examples/AriIndiaFlightsResponseExample.raml
+ 
+  /{source}/{destination}/{doj}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: FlightsResponse[]
+              example: !include examples/AriIndiaFlightsResponseExample.raml
+                
+  
               
       
           

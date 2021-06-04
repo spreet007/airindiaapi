@@ -31,4 +31,22 @@ type airIndiaResponse = Array<{|  Id: Number {"typeId": "int"},   airlineName: S
       </types:output-event>
     </types:processor-declaration>
   </types:enrichment>
+  <types:enrichment select="#288284d7-8a87-412c-97de-838e7bf22e18">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="airIndiaResponse"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#7227984d-7fc3-432d-b48e-9aa581191d64">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="airIndiaInput" type="airindiaInput"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
 </types:mule>

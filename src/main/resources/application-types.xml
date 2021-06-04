@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="airindiaInput" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="airIndiaResponse" format="json">
+      <types:shape format="weave" example="examples/airindiajsonresponse.json"><![CDATA[%dw 2.0
+
+type airIndiaResponse = Array<{|  Id: Number {"typeId": "int"},   airlineName: String,   fCode: String,   fromAirportCode: String,   toAirportCode: String,   departureDate: String,   emptySeats: Number {"typeId": "int"},   totalSeats: Number {"typeId": "int"},   price: Number {"typeId": "int"},   planeType: String|}> {"example": "[{\\\"Id\\\":101,\\\"airlineName\\\":\\\"AirIndia\\\",\\\"fCode\\\":\\\"IND101\\\",\\\"fromAirportCode\\\":\\\"HYD\\\",\\\"toAirportCode\\\":\\\"BLR\\\",\\\"departureDate\\\":\\\"27\\/12\\/2019\\\",\\\"emptySeats\\\":0,\\\"totalSeats\\\":200,\\\"price\\\":199,\\\"planeType\\\":\\\"airlIndia 737\\\"},{\\\"Id\\\":102,\\\"airlineName\\\":\\\"airlIndia\\\",\\\"fCode\\\":\\\"IND102\\\",\\\"fromAirportCode\\\":\\\"HYD\\\",\\\"toAirportCode\\\":\\\"BLR\\\",\\\"departureDate\\\":\\\"27\\/12\\/2019\\\",\\\"emptySeats\\\":24,\\\"totalSeats\\\":350,\\\"price\\\":450,\\\"planeType\\\":\\\"airlIndia 747\\\"},{\\\"Id\\\":103,\\\"airlineName\\\":\\\"airlIndia\\\",\\\"fCode\\\":\\\"IND103\\\",\\\"fromAirportCode\\\":\\\"HYD\\\",\\\"toAirportCode\\\":\\\"BLR\\\",\\\"departureDate\\\":\\\"27\\/12\\/2019\\\",\\\"emptySeats\\\":33,\\\"totalSeats\\\":400,\\\"price\\\":450,\\\"planeType\\\":\\\"airlIndia 757\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#8501158e-2a79-4d45-b520-fdae389996da">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="airindiaInput" type="airindiaInput"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#f6aff980-98dc-4577-b0b7-44d44e39d7ac">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="airIndiaResponse"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

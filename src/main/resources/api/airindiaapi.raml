@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: airindiaapi
+baseUri: http://localhost:8081
+
+types:
+  FlightsResponse: !include datatypes/FlightsResponse.raml
+
+/airIndiaFlights:
+  get:
+    queryParameters:
+      source:
+        example: BANG
+      destination:
+        example: LONDON
+      doj:
+        example: 25-May-2022
+
+    responses:
+      200:
+        body:
+          application/json:
+            type: FlightsResponse[]
+            example: !include examples/AriIndiaFlightsResponseExample.raml
+              
+      
+          
+    
+          
+          
